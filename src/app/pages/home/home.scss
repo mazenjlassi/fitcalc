@@ -1,0 +1,47 @@
+.hero {
+  padding-block: clamp(1.5rem, 5vw, 3.5rem);
+}
+
+.hero__lede {
+  max-width: 42rem;
+  font-size: 1.125rem;
+}
+
+.tool-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.tool-card {
+  display: grid;
+  gap: 0.5rem;
+  align-content: start;
+  padding: 1.25rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
+.tool-card h3 {
+  margin: 0;
+}
+
+.tool-card p {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.tool-card__action {
+  margin-top: 0.5rem;
+  font-weight: 600;
+}
+
+.tool-card--soon {
+  background: var(--color-surface-muted);
+}
+
+@media (min-width: 48rem) {
+  .tool-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

@@ -15,9 +15,13 @@ describe('App', () => {
     expect(fixture.componentInstance).toBeTruthy();
   });
 
-  it('renders a router outlet', () => {
+  it('renders the layout and a router outlet', () => {
     const fixture = TestBed.createComponent(App);
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('router-outlet')).not.toBeNull();
+    const element = fixture.nativeElement as HTMLElement;
+    expect(element.querySelector('app-header')).not.toBeNull();
+    expect(element.querySelector('app-footer')).not.toBeNull();
+    expect(element.querySelector('router-outlet')).not.toBeNull();
+    expect(element.querySelector('#main')).not.toBeNull();
   });
 });

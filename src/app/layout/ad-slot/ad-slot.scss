@@ -1,0 +1,12 @@
+.ad-slot {
+  min-height: 100px;
+  margin-block: 1.5rem;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+@media (min-width: 48rem) {
+  .ad-slot {
+    min-height: 280px;
+  }
+}

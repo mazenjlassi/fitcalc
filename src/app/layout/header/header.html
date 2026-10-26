@@ -1,0 +1,31 @@
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="site-header__brand" routerLink="/" aria-label="fitcalc home">fitcalc</a>
+    <nav class="site-header__nav" aria-label="Main">
+      <a
+        routerLink="/calorie-calculator/"
+        routerLinkActive="is-active"
+        [routerLinkActiveOptions]="{ exact: false }"
+        >Calorie</a
+      >
+      <a
+        routerLink="/protein-calculator/"
+        routerLinkActive="is-active"
+        [routerLinkActiveOptions]="{ exact: false }"
+        >Protein</a
+      >
+      <a
+        routerLink="/body-fat-calculator/"
+        routerLinkActive="is-active"
+        [routerLinkActiveOptions]="{ exact: false }"
+        >Body fat</a
+      >
+      <a
+        routerLink="/about/"
+        routerLinkActive="is-active"
+        [routerLinkActiveOptions]="{ exact: false }"
+        >About</a
+      >
+    </nav>
+  </div>
+</header>
