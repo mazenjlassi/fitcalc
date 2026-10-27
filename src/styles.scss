@@ -12,6 +12,7 @@
   --color-warning-bg: #fff6e5;
   --color-warning-border: #c98a12;
   --color-warning-text: #4a3200;
+  --color-danger: #b3261e;
 
   --layout-max: 64rem;
   --layout-gutter: clamp(1rem, 4vw, 2rem);
@@ -37,6 +38,7 @@
     --color-warning-bg: #2a2110;
     --color-warning-border: #d8a640;
     --color-warning-text: #ffe7b3;
+    --color-danger: #ffb4ab;
   }
 }
 
@@ -96,6 +98,25 @@ a:hover {
 :focus-visible {
   outline: 3px solid var(--color-accent);
   outline-offset: 3px;
+}
+
+input:not([type='radio']):not([type='checkbox']),
+select,
+textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+}
+
+input:not([type='radio']):not([type='checkbox'])[aria-invalid='true'],
+select[aria-invalid='true'],
+textarea[aria-invalid='true'] {
+  border-color: var(--color-danger);
 }
 
 .skip-link {

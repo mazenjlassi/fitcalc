@@ -1,0 +1,21 @@
+:host {
+  display: block;
+}
+
+.disclaimer {
+  padding: 1.25rem;
+  border: 1px solid var(--color-warning-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-warning-bg);
+  color: var(--color-warning-text);
+}
+
+.disclaimer__heading {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+}
+
+.disclaimer p {
+  margin: 0;
+  max-width: 68ch;
+}

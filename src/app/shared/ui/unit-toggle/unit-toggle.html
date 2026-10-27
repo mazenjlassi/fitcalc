@@ -1,0 +1,18 @@
+<fieldset class="units">
+  <legend class="visually-hidden">{{ legend() }}</legend>
+
+  @for (option of options; track option.value) {
+    <label class="units__option">
+      <input
+        class="visually-hidden"
+        type="radio"
+        [name]="name()"
+        [value]="option.value"
+        [checked]="value() === option.value"
+        (change)="select(option.value)"
+        (keydown)="onKeydown($event)"
+      />
+      <span>{{ option.label }}</span>
+    </label>
+  }
+</fieldset>

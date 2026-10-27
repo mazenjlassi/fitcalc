@@ -1,0 +1,30 @@
+<section
+  class="result"
+  role="status"
+  aria-live="polite"
+  aria-atomic="true"
+  [attr.aria-label]="label()"
+>
+  <p class="result__label">{{ label() }}</p>
+  <p class="result__primary">
+    {{ primary() }}
+    @if (unit()) {
+      <span class="result__unit">{{ unit() }}</span>
+    }
+  </p>
+
+  @if (secondary().length > 0) {
+    <dl class="result__details">
+      @for (item of secondary(); track item.label) {
+        <div class="result__detail">
+          <dt>{{ item.label }}</dt>
+          <dd>{{ item.value }}</dd>
+        </div>
+      }
+    </dl>
+  }
+
+  <div class="result__body">
+    <ng-content />
+  </div>
+</section>

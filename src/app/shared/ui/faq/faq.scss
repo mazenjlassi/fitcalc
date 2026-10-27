@@ -1,0 +1,29 @@
+:host {
+  display: block;
+}
+
+.faq__heading {
+  margin-top: 0;
+}
+
+.faq__item {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.faq__item summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.75rem 0;
+  cursor: pointer;
+  font-weight: 650;
+}
+
+.faq__item summary::marker {
+  color: var(--color-accent);
+}
+
+.faq__item p {
+  margin: 0 0 1rem;
+  color: var(--color-text-muted);
+}
