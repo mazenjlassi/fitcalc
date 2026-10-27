@@ -118,10 +118,12 @@ export function applySafetyFloor(
   floor: number = CALORIE_FLOORS[sex],
 ): SafetyFloorResult {
   if (requestedTarget < floor) {
+    const floorText = floor.toLocaleString('en-US');
+
     return {
       target: floor,
       floorApplied: true,
-      warning: `This target is below the ${floor} kcal safety floor, so ${floor} kcal is shown instead. Do not eat below this floor without medical supervision.`,
+      warning: `This target is below the ${floorText} kcal safety floor, so ${floorText} kcal is shown instead. Do not eat below this floor without medical supervision.`,
     };
   }
 

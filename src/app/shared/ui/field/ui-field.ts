@@ -28,7 +28,7 @@ export class UiField {
   readonly fieldId = input.required<string>();
   readonly label = input.required<string>();
   readonly hint = input<string>();
-  readonly error = input<string>();
+  readonly error = input<string | null>();
   readonly required = input(false, { transform: booleanAttribute });
 
   readonly hintId = computed(() => `${this.fieldId()}-hint`);

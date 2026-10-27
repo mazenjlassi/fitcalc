@@ -1,20 +1,183 @@
 <div class="page">
+  <app-breadcrumb [items]="breadcrumb" />
+
   <p class="eyebrow">Calculator</p>
   <h1>Calorie calculator</h1>
   <p class="lede">
-    The calorie calculator is being built. It will estimate basal metabolic rate, daily
-    energy needs, and a sustainable target range using the Mifflin-St Jeor equation.
+    Estimate the calories you burn at rest, your daily maintenance needs, and a target for
+    losing, maintaining, or gaining weight. Everything runs in your browser.
   </p>
 
-  <section class="callout" aria-labelledby="scope-heading">
-    <h2 id="scope-heading">What it will include</h2>
-    <ul>
-      <li>Metric and imperial input with accessible validation.</li>
-      <li>Activity factors from sedentary to extra active.</li>
-      <li>Maintain, mild deficit, and mild surplus goals with a minimum-intake warning.</li>
-      <li>The formula, source, accuracy limits, and a last-reviewed date.</li>
-    </ul>
-  </section>
+  <div class="calculator">
+    <form class="calculator__form" [formGroup]="form" novalidate>
+      <div class="calculator__units">
+        <app-unit-toggle
+          name="units"
+          legend="Measurement units"
+          [value]="units()"
+          (valueChange)="switchUnits($event)"
+        />
+        <p class="calculator__hint">Results update as you type.</p>
+      </div>
 
-  <p><a routerLink="/">Back to all calculators</a></p>
+      <fieldset class="calculator__section">
+        <legend>Your details</legend>
+
+        <div class="form-grid">
+          <app-field fieldId="sex" label="Sex" hint="Used by the Mifflin-St Jeor equation.">
+            <select id="sex" appFieldControl formControlName="sex">
+              <option value="female">Female</option>
+              <option value="male">Male</option>
+            </select>
+          </app-field>
+
+          <app-field
+            fieldId="age"
+            label="Age"
+            hint="15 to 100 years."
+            [error]="ageError()"
+            [required]="true"
+          >
+            <input
+              id="age"
+              appFieldControl
+              type="number"
+              formControlName="age"
+              min="15"
+              max="100"
+              step="1"
+              inputmode="numeric"
+              (blur)="touch('age')"
+            />
+          </app-field>
+
+          @if (units() === 'metric') {
+            <app-field
+              fieldId="height-cm"
+              label="Height (cm)"
+              hint="120 to 250 cm."
+              [error]="heightError()"
+              [required]="true"
+            >
+              <input
+                id="height-cm"
+                appFieldControl
+                type="number"
+                formControlName="heightCm"
+                min="120"
+                max="250"
+                step="0.1"
+                inputmode="decimal"
+                (blur)="touch('height')"
+              />
+            </app-field>
+
+            <app-field
+              fieldId="weight-kg"
+              label="Weight (kg)"
+              hint="30 to 300 kg."
+              [error]="weightError()"
+              [required]="true"
+            >
+              <input
+                id="weight-kg"
+                appFieldControl
+                type="number"
+                formControlName="weightKg"
+                min="30"
+                max="300"
+                step="0.1"
+                inputmode="decimal"
+                (blur)="touch('weight')"
+              />
+            </app-field>
+          } @else {
+            <app-field
+              fieldId="height-imperial"
+              label="Height"
+              hint="For example 5'10&quot; or 5 ft 10 in."
+              [error]="heightError()"
+              [required]="true"
+            >
+              <input
+                id="height-imperial"
+                appFieldControl
+                type="text"
+                formControlName="heightImperial"
+                placeholder="5' 10&quot;"
+                autocomplete="off"
+                (blur)="touch('height')"
+              />
+            </app-field>
+
+            <app-field
+              fieldId="weight-lb"
+              label="Weight (lb)"
+              hint="66 to 661 lb."
+              [error]="weightError()"
+              [required]="true"
+            >
+              <input
+                id="weight-lb"
+                appFieldControl
+                type="number"
+                formControlName="weightLb"
+                min="66"
+                max="662"
+                step="0.1"
+                inputmode="decimal"
+                (blur)="touch('weight')"
+              />
+            </app-field>
+          }
+
+          <app-field fieldId="activity" label="Activity level" [hint]="activityHint()">
+            <select id="activity" appFieldControl formControlName="activity">
+              @for (option of activityOptions; track option.value) {
+                <option [value]="option.value">{{ option.label }}</option>
+              }
+            </select>
+          </app-field>
+
+          <app-field fieldId="goal" label="Goal" [hint]="goalHint()">
+            <select id="goal" appFieldControl formControlName="goal">
+              @for (option of goalOptions; track option.value) {
+                <option [value]="option.value">{{ option.label }}</option>
+              }
+            </select>
+          </app-field>
+        </div>
+      </fieldset>
+
+      <p class="calculator__privacy">
+        <strong>Private by design.</strong> Your measurements are used only in this browser
+        tab. Nothing is sent to a server.
+      </p>
+    </form>
+
+    <div class="calculator__result">
+      <h2 class="calculator__result-heading">Your estimate</h2>
+
+      <app-result-card
+        label="Daily calorie target"
+        [primary]="targetText() || '—'"
+        [unit]="unitText()"
+        [secondary]="details()"
+      >
+        @if (plan(); as plan) {
+          <p class="result-note">
+            Rounded to the nearest calorie. This is a general estimate, not a prescription.
+          </p>
+
+          @if (plan.warning) {
+            <p class="result-warning">{{ plan.warning }}</p>
+          }
+        } @else {
+          <p class="result-note">Enter your age, height, and weight to see an estimate.</p>
+        }
+      </app-result-card>
+    </div>
+  </div>
+
+  <app-disclaimer />
 </div>
