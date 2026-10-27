@@ -74,7 +74,11 @@ Cloudflare Pages, production branch `main`:
 - Environment: `NODE_VERSION=24.22.0`, `SITE_URL=https://<your-domain>`
 
 Pull requests receive automatic Cloudflare preview deployments. GitHub Actions
-runs lint, unit tests, build, and Lighthouse CI.
+runs lint, unit tests, build, and Lighthouse CI. Security headers live in
+`public/_headers`.
+
+The full setup, custom-domain, preview, and verification checklist is in
+[docs/cloudflare-pages.md](docs/cloudflare-pages.md).
 
 ## License
 
