@@ -86,7 +86,7 @@ describe('safety floor', () => {
 
     expect(result.target).toBe(1200);
     expect(result.floorApplied).toBe(true);
-    expect(result.warning).toContain('1200 kcal safety floor');
+    expect(result.warning).toContain('1,200 kcal safety floor');
   });
 
   it('keeps a male target at the floor unchanged', () => {
@@ -98,7 +98,7 @@ describe('safety floor', () => {
 
     expect(result.target).toBe(1500);
     expect(result.floorApplied).toBe(true);
-    expect(result.warning).toContain('1500 kcal safety floor');
+    expect(result.warning).toContain('1,500 kcal safety floor');
   });
 
   it('honours an explicit floor', () => {
@@ -141,7 +141,7 @@ describe('safety floor', () => {
     expect(plan.requestedTarget).toBeCloseTo(1283.5, 10);
     expect(plan.target).toBe(1500);
     expect(plan.floorApplied).toBe(true);
-    expect(plan.warning).toContain('1500 kcal safety floor');
+    expect(plan.warning).toContain('1,500 kcal safety floor');
   });
 
   it('does not warn when the target is above the floor', () => {
