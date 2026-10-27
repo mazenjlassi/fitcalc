@@ -148,4 +148,41 @@ describe('CalorieCalculator', () => {
     expect(component.form.controls.goal.value).toBe('gain-500');
     expect(resultText(fixture)).toContain('2,585');
   });
+
+  it('warns when the entered age is under 18', () => {
+    const fixture = createCalculator();
+    const component = fixture.componentInstance;
+
+    component.form.patchValue({ age: 16, heightCm: 165, weightKg: 60 });
+    fixture.detectChanges();
+
+    const warning = (fixture.nativeElement as HTMLElement).querySelector('.result-warning');
+    expect(warning?.textContent).toContain('under 18');
+  });
+
+  it('renders the methodology, citation, FAQ, and last-reviewed date', () => {
+    const fixture = createCalculator();
+    fixture.detectChanges();
+
+    const element = fixture.nativeElement as HTMLElement;
+    const citation = element.querySelector(
+      'a[href="https://doi.org/10.1093/ajcn/51.2.241"]',
+    ) as HTMLAnchorElement;
+
+    expect(element.querySelector('#how-heading')?.textContent).toContain(
+      'How your calorie target is calculated',
+    );
+    expect(element.querySelector('.formula')?.textContent).toContain('Mifflin-St Jeor equations');
+    expect(citation.textContent).toContain('American Journal of Clinical Nutrition');
+    expect(element.querySelectorAll('app-faq details')).toHaveLength(9);
+    expect(element.querySelectorAll('app-faq summary').length).toBeGreaterThanOrEqual(6);
+    expect(element.querySelector('time')?.getAttribute('datetime')).toBe('2026-10-27');
+    expect(element.textContent).toContain('Last reviewed');
+
+    const proteinLink = Array.from(element.querySelectorAll('a')).find((link) =>
+      link.textContent?.includes('Protein calculator'),
+    );
+
+    expect(proteinLink?.getAttribute('href')).toContain('/protein-calculator');
+  });
 });

@@ -169,6 +169,10 @@
             Rounded to the nearest calorie. This is a general estimate, not a prescription.
           </p>
 
+          @if (ageWarning(); as warning) {
+            <p class="result-warning">{{ warning }}</p>
+          }
+
           @if (plan.warning) {
             <p class="result-warning">{{ plan.warning }}</p>
           }
@@ -178,6 +182,162 @@
       </app-result-card>
     </div>
   </div>
+
+  <section class="content" aria-labelledby="how-heading">
+    <h2 id="how-heading">How your calorie target is calculated</h2>
+    <p>
+      Your body needs energy for basic functions such as breathing, circulation, and keeping
+      warm. That baseline is your basal metabolic rate, or BMR. Daily life and exercise add to
+      it; the total is your total daily energy expenditure, or TDEE. The calculator makes the
+      estimate in three steps.
+    </p>
+
+    <h3>1. Estimate your BMR</h3>
+    <p>
+      We use the Mifflin-St Jeor equation, which combines weight, height, age, and a
+      sex-specific constant. It is one of the most widely used predictive equations for
+      healthy adults.
+    </p>
+
+    <div class="formula">
+      <p class="formula__caption">Mifflin-St Jeor equations</p>
+      <p>
+        <strong>Male:</strong> BMR = 10 &times; weight (kg) + 6.25 &times; height (cm)
+        &minus; 5 &times; age + 5
+      </p>
+      <p>
+        <strong>Female:</strong> BMR = 10 &times; weight (kg) + 6.25 &times; height (cm)
+        &minus; 5 &times; age &minus; 161
+      </p>
+    </div>
+
+    <h3>2. Apply an activity factor</h3>
+    <p>
+      The activity factor is a multiplier for everything you do beyond resting. It is an
+      average for the week, so choose the level that best describes your usual routine rather
+      than a single intense day.
+    </p>
+
+    <div class="table-wrap">
+      <table>
+        <caption>
+          Activity factors used by this calculator
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col">Activity level</th>
+            <th scope="col">Factor</th>
+            <th scope="col">Typical week</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (option of activityOptions; track option.value) {
+            <tr>
+              <th scope="row">{{ option.label }}</th>
+              <td>{{ activityFactors[option.value] }}</td>
+              <td>{{ option.description }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <h3>3. Adjust for your goal</h3>
+    <p>
+      Maintenance is your TDEE. The weight-loss presets subtract 250 or 500 kcal from it, and
+      the weight-gain presets add 250 or 500 kcal. A daily change of 500 kcal is often
+      described as roughly 0.5 kg per week, but real-world progress depends on much more than
+      arithmetic.
+    </p>
+  </section>
+
+  <section class="content" aria-labelledby="accuracy-heading">
+    <h2 id="accuracy-heading">How accurate is the estimate?</h2>
+    <p>
+      Predictive equations are not measurements. Individual results commonly differ from
+      measured energy needs by about <strong>&plusmn;10%</strong>, and the gap can be larger
+      for some people. Two people with the same age, height, weight, and activity level can
+      still have different needs.
+    </p>
+    <p>
+      Treat the number as a starting point. Track your weekly average weight and how you feel
+      for a few weeks, then adjust gradually. Do not chase daily fluctuations; water, food in
+      the digestive tract, sodium, and hormonal changes can move the scale by a kilogram or
+      more.
+    </p>
+    <p class="source">
+      Source:
+      <a href="https://doi.org/10.1093/ajcn/51.2.241">
+        Mifflin MD, St Jeor ST, Hill LA, Scott BJ, Daugherty SA, Koh YO. A new predictive
+        equation for resting energy expenditure in healthy individuals.
+        <cite>American Journal of Clinical Nutrition</cite>. 1990;51(2):241-247.
+      </a>
+    </p>
+  </section>
+
+  <section class="content" aria-labelledby="limitations-heading">
+    <h2 id="limitations-heading">Limitations and who should not use it</h2>
+    <ul>
+      <li>
+        The estimate is designed for healthy adults. It is not appropriate for children or
+        teenagers, pregnancy, breastfeeding, or people with an eating disorder or a medical
+        condition that affects energy needs.
+      </li>
+      <li>
+        It does not measure body composition, thyroid function, medications, illness, or
+        adaptive changes during dieting. Athletes and very muscular people may need more than
+        the equation predicts.
+      </li>
+      <li>
+        The activity factor is subjective. Overestimating it is a common reason a target feels
+        too generous; when in doubt, start lower.
+      </li>
+      <li>
+        Weight change is not linear. A stall over one or two weeks is not proof that the
+        estimate is wrong.
+      </li>
+    </ul>
+  </section>
+
+  <section class="content" aria-labelledby="safety-heading">
+    <h2 id="safety-heading">Safety and minimum intake</h2>
+    <p>
+      This calculator applies a safety floor of 1,200 kcal for females and 1,500 kcal for
+      males. If your requested deficit would go below the floor, the result shows the floor
+      and a warning instead. The floor is a general safety default, not a medical target.
+    </p>
+    <p>
+      Do not use a calorie target as a substitute for medical care or as a reason to ignore
+      hunger, fatigue, or other symptoms. If you are pregnant, breastfeeding, under 18, or
+      managing a health condition, speak with a qualified clinician or registered dietitian
+      before changing your intake.
+    </p>
+  </section>
+
+  <app-faq [items]="faqItems" />
+
+  <section class="content" aria-labelledby="related-heading">
+    <h2 id="related-heading">Related calculators</h2>
+    <ul class="related-links">
+      <li>
+        <a routerLink="/protein-calculator/">Protein calculator</a> estimates a daily protein
+        range for your body weight and goal.
+      </li>
+      <li>
+        <a routerLink="/body-fat-calculator/">Body-fat calculator</a> estimates body-fat
+        percentage from circumference measurements.
+      </li>
+    </ul>
+    <p>
+      Read <a routerLink="/about/">about the project</a>, the
+      <a routerLink="/privacy/">privacy policy</a>, or
+      <a routerLink="/contact/">contact us</a> with a correction or question.
+    </p>
+  </section>
+
+  <p class="meta last-reviewed">
+    Last reviewed: <time datetime="2026-10-27">October 27, 2026</time>.
+  </p>
 
   <app-disclaimer />
 </div>
