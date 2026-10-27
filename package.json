@@ -17,6 +17,7 @@
     "test:ci": "ng test --watch=false",
     "lint": "ng lint",
     "e2e": "playwright test",
+    "test:e2e": "playwright test",
     "lighthouse": "lhci autorun"
   },
   "dependencies": {
