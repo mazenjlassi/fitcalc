@@ -3,7 +3,7 @@
     "collect": {
       "staticDistDir": "./dist/fitcalc/browser",
       "url": ["http://localhost/", "http://localhost/calorie-calculator/"],
-      "numberOfRuns": 1
+      "numberOfRuns": 3
     },
     "assert": {
       "assertions": {
