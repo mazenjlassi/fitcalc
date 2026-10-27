@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   verify:
-    name: Lint, test, build, Lighthouse
+    name: Lint, test, build, e2e, Lighthouse
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
@@ -42,6 +42,12 @@ jobs:
       - name: Lighthouse CI
         run: npx lhci autorun --config=./lighthouserc.json
 
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+
+      - name: End-to-end tests
+        run: npm run e2e
+
       - name: Upload diagnostics
         if: failure()
         uses: actions/upload-artifact@v4
@@ -54,3 +60,5 @@ jobs:
             coverage/
             .lighthouseci/
             dist/
+            playwright-report/
+            test-results/

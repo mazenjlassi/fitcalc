@@ -28,9 +28,13 @@ npm start                 # dev server at http://localhost:4200
 npm run lint
 npm test -- --watch=false
 npm run build             # static output in dist/fitcalc/browser
-npm run test:e2e
+npm run e2e               # Playwright smoke tests against the built output
 npm run lighthouse
 ```
+
+End-to-end tests need a Chromium build: run `npx playwright install chromium`
+once, then `npm run build` before `npm run e2e`. CI installs the browser itself;
+test artifacts are ignored.
 
 `SITE_URL` controls canonical URLs, Open Graph URLs, and the sitemap. It defaults
 to `http://localhost:4200` locally and falls back to `CF_PAGES_URL` in Cloudflare
