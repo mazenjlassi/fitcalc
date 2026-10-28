@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -39,6 +39,7 @@ import {
   type ResultDetail,
   type UnitSystem,
 } from '@shared/ui';
+import { PAGE_META, SeoService } from '@shared/seo';
 
 type MeasurementField = 'age' | 'height' | 'weight';
 
@@ -60,6 +61,8 @@ type MeasurementField = 'age' | 'height' | 'weight';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalorieCalculator {
+  private readonly seo = inject(SeoService);
+
   readonly breadcrumb: readonly BreadcrumbItem[] = [
     { label: 'Home', link: '/' },
     { label: 'Calorie calculator' },
@@ -228,6 +231,17 @@ export class CalorieCalculator {
   private readonly numberFormatter = new Intl.NumberFormat('en-US');
 
   constructor() {
+    this.seo.setPage({
+      ...PAGE_META.calorieCalculator,
+      path: '/calorie-calculator/',
+      breadcrumbs: this.breadcrumb.map(({ label, link }) => ({ label, path: link })),
+      webApplication: {
+        name: 'Calorie calculator',
+        description: PAGE_META.calorieCalculator.description,
+      },
+      faq: this.faqItems,
+    });
+
     this.form.valueChanges.pipe(takeUntilDestroyed()).subscribe(() => {
       this.values.set(this.form.getRawValue());
     });
